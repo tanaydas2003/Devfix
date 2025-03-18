@@ -1,6 +1,7 @@
 'use client';
 import { FileUpload } from '@/components/file-upload';
 import { Button } from '@/components/ui/button';
+import axios from 'axios';
 import {
 	Dialog,
 	DialogContent,
@@ -22,7 +23,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-
+import { useRouter } from 'next/navigation';
 const formSchema = z.object({
 	name: z.string().min(1, {
 		message: 'Server name is required.',
@@ -34,6 +35,7 @@ const formSchema = z.object({
 
 export const IntialModal = () => {
 	const [isMounted, setIsMounted] = useState(false);
+	const router = useRouter();
 
 	useEffect(() => {
 		setIsMounted(true);
@@ -47,12 +49,18 @@ export const IntialModal = () => {
 		},
 	});
 
-	const isImage = form.watch('imageUrl');
-
 	const isLoading = form.formState.isSubmitting;
 	const onSubmit = async (values: z.infer<typeof formSchema>) => {
-		console.log(values);
+		try {
+			await axios.post('/api/servers', values);
+			form.reset();
+			router.refresh();
+			window.location.reload();
+		} catch (error) {
+			console.log(error);
+		}	
 	};
+
 	if (!isMounted) {
 		return null;
 	}
@@ -65,31 +73,29 @@ export const IntialModal = () => {
 						Customize Your Server
 					</DialogTitle>
 					<DialogDescription className="text-center text-zinc-500">
-						Give your server a personality with a name and an image.You can
+						Give your server a personality with a name and an image. You can
 						always change it later.
 					</DialogDescription>
 				</DialogHeader>
 				<Form {...form}>
 					<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
 						<div className="space-y-8 px-6">
-							{!isImage && (
-								<div className="flex items-center justify-center text-center">
-									<FormField
-										control={form.control}
-										name="imageUrl"
-										render={({ field }) => (
-											<FormItem>
-												<FormControl>
-													<FileUpload
-														endpoint="serverImage"
-														onChange={field.onChange}
-													/>
-												</FormControl>
-											</FormItem>
-										)}
-									/>
-								</div>
-							)}
+							{/* Always render FileUpload, letting it decide what to display */}
+							<FormField
+								control={form.control}
+								name="imageUrl"
+								render={({ field }) => (
+									<FormItem>
+										<FormControl>
+											<FileUpload
+												endpoint="serverImage"
+												onChange={field.onChange}
+												value={field.value}
+											/>
+										</FormControl>
+									</FormItem>
+								)}
+							/>
 							<FormField
 								control={form.control}
 								name="name"

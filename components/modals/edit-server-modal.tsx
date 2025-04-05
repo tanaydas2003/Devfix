@@ -46,7 +46,7 @@ export const EditServerModal = () => {
     const router = useRouter();
    
     const isModalOpen = isOpen && type === "editServer";
-    const { server } = data;
+    const { server } = data || {};
 
     const form = useForm({
         resolver: zodResolver(formSchema),

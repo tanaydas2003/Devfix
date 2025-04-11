@@ -73,7 +73,7 @@ export const ServerSearch = ({
                 open={open}
                 onOpenChange={setOpen}
             >
-                <CommandInput placeholder="Search all channels and members" />
+                <CommandInput placeholder="Search all channels and devs" />
                 <CommandList>
                     <CommandEmpty>
                         No Results Found

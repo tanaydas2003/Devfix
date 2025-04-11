@@ -1,5 +1,3 @@
-"use client";
-
 import { Check, Copy, RefreshCw } from "lucide-react";
 
 import {
@@ -61,7 +59,7 @@ export const InviteModal = () => {
             <DialogContent className="bg-white text-black p-0 overflow-hidden">
                 <DialogHeader className="pt-8 px-6">
                     <DialogTitle className="text-2xl text-center font-bold">
-                        Invite Friends
+                        Invite Developers
                     </DialogTitle>
                     <DialogDescription className="text-center text-zinc-500">
                     </DialogDescription>
@@ -70,7 +68,7 @@ export const InviteModal = () => {
                     <Label
                         className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70"
                     >
-                        Server invite link
+                        Codespace invite link
                     </Label>
                     <div className="flex items-center mt-2 gap-x-2">
                         <Input

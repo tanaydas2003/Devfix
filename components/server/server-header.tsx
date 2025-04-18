@@ -39,7 +39,7 @@ export const ServerHeader = ({
                         onClick={() => onOpen("invite", {server})} 
                         className="text-indigo-600 dark:text-indigo-400 px-3 py-2 text-sm cursor-pointer"
                     >
-                        Invite People
+                        Invite Devs
                         <UserPlus className="h-4 w-4 ml-auto"/>
                     </DropdownMenuItem>
                 )}
@@ -48,7 +48,7 @@ export const ServerHeader = ({
                         onClick={() => onOpen("editServer",{server})} 
                         className="px-3 py-2 text-sm cursor-pointer"
                     >
-                        Server Settings
+                        Codespace Settings
                         <Settings className="h-4 w-4 ml-auto"/>
                     </DropdownMenuItem>
                 )}
@@ -57,7 +57,7 @@ export const ServerHeader = ({
                         onClick={() => onOpen("members",{server})}  
                         className="px-3 py-2 text-sm cursor-pointer"
                     >
-                        Manage Members
+                        Manage Devs
                         <User className="h-4 w-4 ml-auto"/>
                     </DropdownMenuItem>
                 )}
@@ -78,7 +78,7 @@ export const ServerHeader = ({
                         onClick={() => onOpen("deleteServer",{server})} 
                         className="text-rose-500 px-3 py-2 text-sm cursor-pointer"
                     >
-                        Delete Server
+                        Delete Codespace
                         <Trash className="h-4 w-4 ml-auto"/>
                     </DropdownMenuItem>
                 )}

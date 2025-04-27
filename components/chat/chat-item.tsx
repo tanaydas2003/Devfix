@@ -1,25 +1,25 @@
 'use client'
 
-import * as z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 import axios from 'axios'
 import qs from 'query-string'
 import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import * as z from 'zod'
 
 import { Member, MemberRole, Profile } from '@prisma/client'
 import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash2 } from 'lucide-react'
 
 import Image from 'next/image'
+import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { useRouter, useParams } from 'next/navigation'
 
-import { UserAvatar } from '@/components/user-avatar'
 import { ActionTooltip } from '@/components/action-tooltip'
-import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import { UserAvatar } from '@/components/user-avatar'
 import { useModal } from '@/hooks/use-modal-store'
+import { cn } from '@/lib/utils'
 
 interface ChatItemProps {
   id: string
@@ -122,7 +122,7 @@ export const ChatItem = ({
   const canDeleteMessage = !deleted && (isAdmin || isModerator || isOwner)
   const canEditMessage = !deleted && isOwner && !fileUrl
   const isPDF = fileType === 'pdf' && fileUrl
-  const isImage = !isPDF && fileUrl
+  const isImage = fileType === 'image' && fileUrl
 
   useEffect(() => {
     const detectFileType = async () => {
@@ -132,9 +132,9 @@ export const ChatItem = ({
         const response = await fetch(fileUrl, { method: "HEAD" });
         const contentType = response.headers.get("content-type");
         
-        if (contentType?.includes("application/pdf")) {
+        if (contentType?.includes("pdf")) {
           setFileType("pdf");
-        } else if (contentType?.startsWith("image/")) {
+        } else if (contentType?.includes("image")) {
           setFileType("image");
         } else {
           setFileType(null);

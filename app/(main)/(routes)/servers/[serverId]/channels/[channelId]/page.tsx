@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
 import { ChannelType } from "@prisma/client";
+import { redirect } from "next/navigation";
 
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
@@ -10,15 +10,16 @@ import { ChatMessages } from "@/components/chat/chat-messages";
 import { MediaRoom } from "@/components/media-room";
 
 interface ChannelIdPageProps {
-    params: {
+    params: Promise<{
         serverId: string;
         channelId: string;
-    }
+    }>
 }
 
 const ChannelIdPage = async ({
     params
 }: ChannelIdPageProps) => {
+    const { serverId, channelId } = await params;
     const profile = await currentProfile();
 
     if (!profile) {
@@ -27,13 +28,13 @@ const ChannelIdPage = async ({
 
     const channel = await db.channel.findUnique({
         where: {
-            id: params.channelId,
+            id: channelId,
         },
     });
 
     const member = await db.member.findFirst({
         where: {
-            serverId: params.serverId,
+            serverId: serverId,
             profileId: profile?.id,
         }
     });

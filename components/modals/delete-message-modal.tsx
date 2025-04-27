@@ -1,17 +1,17 @@
 "use client";
 
-import qs from "query-string";
 import axios from "axios";
+import qs from "query-string";
 
+import { Button } from "@/components/ui/button";
 import {
     Dialog,
     DialogContent,
     DialogDescription,
     DialogFooter,
     DialogHeader,
-    DialogTitle    
-} from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button";
+    DialogTitle
+} from "@/components/ui/dialog";
 
 import { useModal } from "@/hooks/use-modal-store";
 import { useState } from "react";
@@ -20,7 +20,7 @@ export const DeleteMessageModal = () => {
     const { isOpen, onClose, type, data} = useModal();
 
     const isModalOpen = isOpen && type === "deleteMessage";
-    const { apiUrl, query } = data;
+    const { apiUrl, query } = data ?? {};
 
     const [isLoading, setIsLoading] = useState(false);
 

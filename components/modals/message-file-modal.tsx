@@ -1,13 +1,13 @@
 "use client";
 
-import axios from "axios";
-import * as z from "zod";
-import qs from "query-string";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import qs from "query-string";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 import {
   Dialog,
@@ -25,8 +25,8 @@ import {
   FormItem,
 } from "@/components/ui/form";
 
-import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
+import { Button } from "@/components/ui/button";
 
 const formSchema = z.object({
   fileUrl: z.string().min(1, {
@@ -40,7 +40,7 @@ export const MessageFileModal = () => {
   const [error, setError] = useState<string | null>(null);
 
   const isModalOpen = isOpen && type === "messageFile";
-  const { apiUrl, query } = data;
+  const { apiUrl, query } = data ?? {};
 
   const form = useForm({
     resolver: zodResolver(formSchema),
